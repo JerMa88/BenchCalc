@@ -32,18 +32,29 @@ struct WorkoutView: View {
         Exercise(exerciseName: "Leg Press", weight: 500, reps: 5, percentage: 80, restTime: 180),
         Exercise(exerciseName: "Squat", weight: 300, reps: 1, percentage: 100, restTime: 180),
         Exercise(exerciseName: "Calf Raise", weight: 0, reps: 10, percentage: 50, restTime: 180),
-    ], workoutDate: Date(), workoutNote: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.")
+    ], workoutDate: Date(), workoutNote: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.")
     var body: some View {
         Text(workout.workoutName)
             .font(.headline)
-        NavigationLink {
-            Text("\(workout.workoutDate, format: Date.FormatStyle(date: .numeric, time: .standard))")
+        VStack{
+            NavigationLink {
+                Text("\(workout.workoutDate, format: Date.FormatStyle(date: .numeric, time: .standard))")
             } label: {
                 Text(workout.workoutDate, format: Date.FormatStyle(date: .numeric, time: .standard))
             }
-
-        ExerciseView()
-        Text(workout.workoutNote)
+            @State var workoutNote = workout.workoutNote
+            ExerciseView(exercises: workout.exercises)
+            Text("Workout Notes:")
+                .padding()
+                .bold()
+            ExpandViewer{
+                TextField("WorkoutNotes", text: $workoutNote, axis: . vertical)
+            }
             .padding()
+        }
     }
+}
+
+#Preview{
+    WorkoutView()
 }
